@@ -1,0 +1,17 @@
+# 讀取JSON檔案
+json_data <- fromJSON("C:/R-coding/data/job.json")
+
+# 將JSON數據轉換為data.frame
+df <- as.data.frame(json_data)
+
+# 假設 "平均投保薪資" 欄位中包含非數值數據
+df$投保薪資 <- as.numeric(df$投保薪資)
+
+# 使用dplyr套件進行分析和排序
+result <- df %>%
+  group_by(業別) %>%              # 假設"業別"是JSON中的相應欄位
+  summarize(平均投保薪資 = mean(平均投保薪資)) %>%
+  arrange(desc(平均投保薪資))     # 按照平均投保薪資由高到低排序
+
+# 打印排序後的結果
+print(result)
