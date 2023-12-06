@@ -1,0 +1,5 @@
+data <- readxl::read_excel("data/tp00236yac.xlsx")
+data <- as.data.frame(t(data))
+number <- data$V35 |> as.numeric()
+sortnumber <- sort(number, decreasing=TRUE,index.return = TRUE)
+print(sortnumber)
