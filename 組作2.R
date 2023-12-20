@@ -256,7 +256,7 @@ taipeimetro <- data.frame(
 )
 
 ggplot(taipeimetro, aes(x = year, y = value)) +
-  geom_line(color = "blue", size = 2) +
+  geom_line(color = "blue", size = 1) +
   labs(x = "年份", y = "人數(百萬)", title = "總進站折線圖") +
   scale_x_continuous(breaks = c(104,105,106,107, 108, 109,110,111), labels = c("104","105","106","107","108","109","110","111")
   )
@@ -414,13 +414,14 @@ row_index_min1
 
 data[c(76,68),c(1)]
 
+cat("板南線108年進站資訊")
 cat("最大值:", data[c(76),c(1)], max_value1)
 cat("最小值:", data[c(68),c(1)], min_value1)
 cat("平均值:", mean_value1, "\n")
 
 
 
-# 淡水信義線
+# 淡水信義線-----
 group_indices2 <- c(41,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,85,86,87,88,89,18,121)
 selected_data2 <- v9_data[group_indices2, ]
 selected_data2 <- as.numeric(selected_data2)
@@ -433,7 +434,7 @@ row_index_min2
 #data[c(a+3,b+3),c(1)]
 data[c(46,61),c(1)]
 
-
+cat("淡水信義線108年進站資訊")
 cat("最大值:", data[c(46),c(1)], max_value2)
 cat("最小值:", data[c(61),c(1)], min_value2)
 cat("平均值:", mean_value2, "\n")
@@ -454,7 +455,7 @@ row_index_min3
 #data[c(a+3,b+3),c(1)]
 data[c(40,103),c(1)]
 
-
+cat("中和新蘆線108年進站資訊")
 cat("最大值:", data[c(40),c(1)], max_value3)
 cat("最小值:", data[c(103),c(1)], min_value3)
 cat("平均值:", mean_value3, "\n")
@@ -474,7 +475,7 @@ row_index_min4
 #data[c(a+3,b+3),c(1)]
 data[c(123,28),c(1)]
 
-
+cat("松山新店線108年進站資訊")
 cat("最大值:", data[c(123),c(1)], max_value4)
 cat("最小值:", data[c(28),c(1)], min_value4)
 cat("平均值:", mean_value4, "\n")
@@ -493,7 +494,7 @@ row_index_min5
 #data[c(a+3,b+3),c(1)]
 data[c(27,14),c(1)]
 
-
+cat("文湖線線108年進站資訊")
 cat("最大值:", data[c(27),c(1)], max_value5)
 cat("最小值:", data[c(14),c(1)], min_value5)
 cat("平均值:", mean_value5, "\n")
