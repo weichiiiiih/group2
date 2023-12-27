@@ -12,12 +12,105 @@ library(tibble)
 install.packages("ggplot2")
 library(ggplot2)
 
-#分組-------
+
 #安裝
 install.packages(c("readxl", "dplyr"))
 library(readxl)
 library(dplyr)
 install.packages("dplyr")
+
+install.packages("knitr")
+library(knitr)
+
+#中文字
+install.packages("showtext")
+library(showtext)
+showtext.auto()  # 啟用showtext自動模式
+plot(1:10, main = "測試中文字型")
+
+
+
+#安裝並載入折線圖的package:gcookbook----
+install.packages(c("ggplot2", "gcookbook")) 
+library(ggplot2) 
+library(gcookbook) 
+
+
+#總進站量折線圖-----
+taipeimetro <- data.frame(
+  year = c(104,105,106,107,108,109,110,111),
+  value = c(716.575283,
+            738.974313,
+            745.298914,
+            764.804427,
+            788.970453,
+            695.540439,
+            530.912219,
+            587.017562
+  )
+)
+
+ggplot(taipeimetro, aes(x = year, y = value)) +
+  geom_line(color = "blue", size = 1) +
+  labs(x = "年份", y = "人數(百萬)", title = "總進站折線圖") +
+  scale_x_continuous(breaks = c(104,105,106,107, 108, 109,110,111), labels = c("104","105","106","107","108","109","110","111")
+  )
+
+
+
+
+#104-108年改變量----
+values <- c(716.575283,
+            788.970453
+)
+
+change_rate <- function(values) {
+  new_values <- values[-1]
+  old_values <- values[-length(values)]
+  
+  rate <- (new_values - old_values) / old_values * 100
+  
+  return(rate)
+}
+
+result <- change_rate(values)
+print(result)
+
+#108-110年改變量----
+values2 <- c( 788.970453,
+              530.912219)
+change_rate <- function(values) {
+  new_values <- values[-1]
+  old_values <- values[-length(values)]
+  
+  rate <- (new_values - old_values) / old_values * 100
+  
+  return(rate)
+}
+
+result2 <- change_rate(values2)
+print(result2)
+
+
+#110-111年改變量----
+values3 <- c( 530912219,
+              587017562)
+change_rate <- function(values) {
+  new_values <- values[-1]
+  old_values <- values[-length(values)]
+  
+  rate <- (new_values - old_values) / old_values * 100
+  
+  return(rate)
+}
+
+result3 <- change_rate(values3)
+print(result3)
+
+#結果
+print(result)
+print(result2)
+print(result3)
 
 
 #104年進站----
@@ -31,8 +124,6 @@ sortnumber1V <- sort(numberV1, decreasing=F,index.return = TRUE)
 print(sortnumber1V)
 # 26  12  59  64  10  24  21  58 101 102 
 data[c(28,14,61,66,12,26,23,60,103,104), c(1,2)] #後10
-
-
 
 
 #104年出站----
@@ -235,82 +326,6 @@ print(sortnumber16V)
 data[c(14,61,12,23,28,60,4,95,11,15), c(1,17)] #後十
 
 
-#安裝並載入折線圖的package:gcookbook----
-install.packages(c("ggplot2", "gcookbook")) 
-library(ggplot2) 
-library(gcookbook) 
-
-
-#總進站量折線圖-----
-taipeimetro <- data.frame(
-  year = c(104,105,106,107,108,109,110,111),
-  value = c(716.575283,
-            738.974313,
-            745.298914,
-            764.804427,
-            788.970453,
-            695.540439,
-            530.912219,
-            587.017562
-  )
-)
-
-ggplot(taipeimetro, aes(x = year, y = value)) +
-  geom_line(color = "blue", size = 1) +
-  labs(x = "年份", y = "人數(百萬)", title = "總進站折線圖") +
-  scale_x_continuous(breaks = c(104,105,106,107, 108, 109,110,111), labels = c("104","105","106","107","108","109","110","111")
-  )
-
-
-
-
-#105-108年改變量----
-values <- c(716.575283,
-            788.970453
-)
-
-change_rate <- function(values) {
-  new_values <- values[-1]
-  old_values <- values[-length(values)]
-  
-  rate <- (new_values - old_values) / old_values * 100
-  
-  return(rate)
-}
-
-result <- change_rate(values)
-print(result)
-
-#108-110年改變量----
-values2 <- c( 788.970453,
-              530.912219)
-change_rate <- function(values) {
-  new_values <- values[-1]
-  old_values <- values[-length(values)]
-  
-  rate <- (new_values - old_values) / old_values * 100
-  
-  return(rate)
-}
-
-result2 <- change_rate(values2)
-print(result2)
-
-
-#110-111年改變量----
-values3 <- c( 530912219,
-              587017562)
-change_rate <- function(values) {
-  new_values <- values[-1]
-  old_values <- values[-length(values)]
-  
-  rate <- (new_values - old_values) / old_values * 100
-  
-  return(rate)
-}
-
-result3 <- change_rate(values3)
-print(result3)
 
 
 #108年進出站相關係數------
@@ -347,29 +362,42 @@ cor108 <- cor(co108$X....c.788970453..32213290..28021574..26383018..22918425..15
 print(paste("相關係數",cor108))
 
 
-  
+#進站前十、後十------
+station10 <- data.frame(
+  Top_station =c ("進站人次","台北車站R人次","忠孝敦化人次","西門人次","台北車站BL人次","板橋人次",
+                  "中山R人次","新埔人次","忠孝復興BL人次","頂溪人次","忠孝敦化人次", "...",
+                  "木柵人次","麟光人次","松江南京G人次","松山機場人次","復興崗人次",
+                  "小碧潭人次","大湖公園人次","辛亥人次","忠義人次","萬芳社區人次")
+)
+View(station10)
+
+
+
 # 複製轉運站-----
 # 複製第38列、做成中正紀念堂R
 new_row1 <- data[38, ]
 names(new_row1) <- names(data)
 data <- rbind(data, new_row1)
-
+data[121,1] <- "中正紀念G人次"
 
 # 複製第37列、做成古亭Y
 new_row2 <- data[37, ]
 names(new_row2) <- names(data)
 data <- rbind(data, new_row2)
+data[122,1] <- "古亭Y人次"
 
 # 複製第76列、做成西門G
 new_row3 <- data[76, ]
 names(new_row3) <- names(data)
 data <- rbind(data, new_row3)
+data[123,1] <- "西門G人次"
 
 
 # 複製第113列、做成東門R
 new_row4 <- data[113, ]
 names(new_row4) <- names(data)
 data <- rbind(data, new_row4)
+data[124,1] <- "東門R人次"
 
 # 直接索引刪除指定行
 data <- data[rownames(data) != "382", ]
@@ -418,6 +446,11 @@ cat("板南線108年進站資訊")
 cat("最大值:", data[c(76),c(1)], max_value1)
 cat("最小值:", data[c(68),c(1)], min_value1)
 cat("平均值:", mean_value1, "\n")
+
+
+
+
+
 
 
 
@@ -494,7 +527,40 @@ row_index_min5
 #data[c(a+3,b+3),c(1)]
 data[c(27,14),c(1)]
 
-cat("文湖線線108年進站資訊")
+cat("文湖線108年進站資訊")
 cat("最大值:", data[c(27),c(1)], max_value5)
 cat("最小值:", data[c(14),c(1)], min_value5)
 cat("平均值:", mean_value5, "\n")
+
+
+# 捷運線表格-----
+table_www <- data.frame(
+  Category = c("板南線108年進站資訊","","",
+               "文湖線108年進站資訊", "", "",
+               "淡水信義線108年進站資訊", "", "",
+               "中和新蘆線108年進站資訊", "", "",
+               "松山新店線108年進站資", "", "",
+               "文湖線108年進站資訊", "", ""),
+  Metric = c("最大值", "最小值", "平均值",
+             "最大值", "最小值", "平均值",
+             "最大值", "最小值", "平均值",
+             "最大值", "最小值", "平均值",
+             "最大值", "最小值", "平均值",
+             "最大值", "最小值", "平均值"),
+  Station = c("西門BL人次", "土城人次", " ",
+              "南港展覽館BR人次", "萬芳社區人次"," ",
+              "台北車站R人次", "忠義人次" ," " ,
+              "頂溪人次", "先嗇宮人次", " " ,
+              "西門G人次", "小碧潭人次", " " ,
+              "南港展覽館BR人次", "萬芳社區人次"," "),
+  Value= c("28021574", "2676232","10916922 ",
+            "5913923", "920476", "3357117"
+            ,"32213290","1111153","7468931",
+            "13048812", "1594225", "5768613 "
+            ,"28021574","1175566","7473967 ",
+            "5913923","920476","3357117 "
+            )
+)
+
+# 顯示表格
+View(table_www)
